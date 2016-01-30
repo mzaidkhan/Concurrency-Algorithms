@@ -1,0 +1,29 @@
+-----------------------
+Exercise 2, Part 1
+-----------------------
+The ReentrantLock mechanism has be employed to access the Pot, which is the shared resource.
+The Pot can be accessed in two situations:-
+1. The Pot can be accessed by the Savage in order to consume a meal, when there is at least one meal in the Pot
+2. When the Savage identifies that the Pot is empty, it asks the Cook to refill the Pot to its full capacity and then consume a meal
+In both situations, access to the Pot must be synchronized to avoid concurrent updates from the various Savages and the Cook.
+
+In order to achieve synchronization the current Savage, must obtain a lock before it can access the Pot and based on the situation will either consume a meal 
+from it, if there is at least one meal in the Pot or ask the Cook to refill it and eventually consume a meal from it.
+Once the above activity is completed by the current Savage, it must release the lock so that the other Savages can access the Pot again and consume meal(s).
+
+Since the Savage eat only one meal and leaves, it is guaranteed that all other Savages will eat one meal from the Pot. Thus fairness is guaranteed.
+
+-----------------------
+Exercise 2, Part 2
+-----------------------
+If the situation demands that the Savages are always hungry, the program of Part 1 should be modified to replace the ReentrantLock with the mutual exclusion mechanism 
+provided by the Bakery Algorithm.
+
+Bakery Algorithm is a proven solution that is fair, succinct and elegant. It guarantees that there will be no deadlocks and strictly adheres to mutual exclusion.
+
+Using Bakery algorithm will ensure that access to the Pot is synchronized and no Savage will not eat more often than other Savages. 
+
+
+
+
+

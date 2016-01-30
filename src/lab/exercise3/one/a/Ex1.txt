@@ -1,0 +1,102 @@
+Exercise 1
+--------------
+
+Readings 
+-------------------------------------------------------------------------------
+Case 1 - CAS Lock
+-------------------------------------------------------------------------------
+
+-----------------------------------------------------------
+scenario - 4 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex1A 4
+Counter value = 300000
+Counter accessed 138929 by threadID 0
+Counter accessed 54275 by threadID 1
+Counter accessed 53064 by threadID 2
+Counter accessed 53732 by threadID 3
+Total count accesses : 300000
+Execution time = 125322410 nanoseconds
+
+-----------------------------------------------------------
+scenario - 8 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex1A 8
+Counter value = 300000
+Counter accessed 118039 by threadID 0
+Counter accessed 9012 by threadID 1
+Counter accessed 9534 by threadID 2
+Counter accessed 9332 by threadID 3
+Counter accessed 59787 by threadID 4
+Counter accessed 12456 by threadID 5
+Counter accessed 12760 by threadID 6
+Counter accessed 69080 by threadID 7
+Total count accesses : 300000
+Execution time = 148051359 nanoseconds
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+Case 1 - CCAS Lock
+-------------------------------------------------------------------------------
+
+-----------------------------------------------------------
+scenario - 4 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex1B 4
+Counter value = 300000
+Counter accessed 53799 by threadID 0
+Counter accessed 139231 by threadID 1
+Counter accessed 95623 by threadID 2
+Counter accessed 11347 by threadID 3
+Total count accesses : 300000
+Execution time = 124367583 nanoseconds
+
+-----------------------------------------------------------
+scenario - 8 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex1B 8
+Counter value = 300000
+Counter accessed 63152 by threadID 0
+Counter accessed 71039 by threadID 1
+Counter accessed 124245 by threadID 2
+Counter accessed 2820 by threadID 3
+Counter accessed 10590 by threadID 4
+Counter accessed 13064 by threadID 5
+Counter accessed 9621 by threadID 6
+Counter accessed 5469 by threadID 7
+Total count accesses : 300000
+Execution time = 165600442 nanoseconds
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+
+-----------------
+Tabulation      |
+-----------------
+
+|--------------|----------|---------|--------|--------|--------------|
+| Scenario     | Counter  | Threads | Min    | Max    | Runtime [ms] | 
+|--------------|----------|---------|--------|--------|--------------|
+| CASLock      | 300000   | 4       | 53064  | 138929 | 125.322410   |
+|              |          | 8       | 9012   | 118039 | 148.051359   |
+|--------------|----------|---------|--------|--------|--------------|
+| CCASLock     | 300000   | 4       | 11347  | 139231 | 124.367583   |
+|              |          | 8       | 2820   | 124245 | 165.600442   |
+|--------------|----------|---------|--------|--------|--------------|
+
+Multi-processor Peterson 
+|--------------|----------|---------|--------|--------|--------------|
+| Scenario     | Counter  | Threads | Min    | Max    | Runtime [ms] | 
+|--------------|----------|---------|--------|--------|--------------|
+|Non-Volatile  | 300000   | 4       | 74783  | 75213  | 244.217418   |
+|              |          | 8       | 37345  | 37528  | 418.490301   |
+|--------------|----------|---------|--------|--------|--------------|
+| Volatile     | 300000   | 4       | 74573  | 75242  | 245.091992   |
+|              |          | 8       | 37360  | 37528  | 454.332867   |
+|--------------|----------|---------|--------|--------|--------------|
+
+Both the CASLock and CCASLock more or less have comparable runtimes. They are definitely
+faster than the Peterson's algorithm due to the reduced space complexity of O(1) as compared
+to O(n) for Peterson's algorithm. This space reduction is due to the use of Atomic Read Modify Write
+incorporated within CAS and CCAS Locks.

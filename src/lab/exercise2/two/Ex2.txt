@@ -1,0 +1,21 @@
+The generalized Peterson's algorithm doesn't offer complete fairness, although it guarantees it is starvation free. 
+i.e, Every thread that calls the lock() method eventually enters the critical section.
+
+For example, if 5 threads invoke the lock() method at a given instance of time. Generalized Peterson's algorithm has no way to 
+identify which thread invoked the lock() method. Hence it doesn't guarantee a first come first serve implementation.
+
+Ideally speaking if thread A calls lock() before thread B, then A should enter the critical section before B. Unfortunately,
+the algorithm cannot determine which thread called the lock() method first.
+
+In order to determine which thread called lock() method first, we could split the lock() method into two sections of code
+
+1. A doorway section, whose execution interval Da consists of a bounded number of steps, and
+
+2. A waiting section, whose execution interval Wa may take an unbounded number of steps.
+
+A lock is first-come-first-served if, whenever, thread A finishes its doorway before thread B starts its doorway, 
+then A cannot be overtaken by B:
+	If DjA → DkB, then CSjA → CSkB .
+for threads A and B and integers j and k
+
+Additional, implementation of the doorway will ensure the addition of Fairness to the generalized Peterson's algorithm.

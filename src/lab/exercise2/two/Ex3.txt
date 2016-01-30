@@ -1,0 +1,46 @@
+Exercise 3
+----------------------
+
+Part 1
+-------
+The first execution history is linearizable. It can be run concurrently without any problems with real time ordering.
+The locking and unlocking mechanisms can be adjusted so that the critical sections of each 
+process is run concurrently to achieve the desired result of linearizability.
+
+The process need to run in real time order as described below:
+1. Thread B the first process, before call to r.write(1) acquires a write lock, adds 1 to the register and releases the lock
+2. In the meantime, Thread A before call to r.read(1) waits until Thread B's critical section of r.write(1)
+is complete, acquires a read lock and and then runs it's own critical section to get  1 from the register. Once done releases the lock
+3. Thread C before it's call to r.write(2) waits until the critical section of Thread A's r.read(1)
+is complete, acquires the write lock and and then runs it's own critical section to add 2 to the register. Subsequently, releases the lock
+4. Thread B before it's call to r.read(2), wait until the critical section of Thread C's r.write(2) is complete, acquires the read lock 
+and then run it's critical section to get 2 from the register. Once done, releases the lock.
+
+If the above steps are followed, it can be guaranteed that the about execution is linearizable. Since we proved that the above history is 
+linearizable, it is also sequentially consistent.
+
+
+Part 2
+-------
+The second execution history is neither sequentially consistent nor linearizable.
+
+It is not linearizable because: 
+B (r.write(1)) --> A (r.write(2))  --> B (r.read(2))  --> B (r.read(1)) 
+                                                          -------------
+We encounter a problematic situation where we cannot read 1 from register as it was overwritten with 2.
+
+If it has to be linearizable, some ways of ordering would have been described below:
+
+B (r.write(1)) -->  B (r.read(1)) --> A (r.write(2)) --> B (r.read(2))
+
+or 
+
+A (r.write(2)) --> B (r.read(2)) --> B (r.write(1)) -->  B (r.read(1))
+
+Also, there is no way to achieve sequential consistency as we cannot delay subsequent reads and writes of Threads A & B to achieve the
+desired result.
+
+To achieve the desired result, the execution of writes and reads must be internally ordered within thread B. 
+Since this cannot be altered at runtime, we cannot achieve sequential consistency.
+
+Thus the conclusion that the above execution history is neither sequentially consistent nor linearizable.

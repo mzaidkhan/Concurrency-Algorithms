@@ -1,0 +1,21 @@
+Results
+-----------------------------------
+	Wait-free traversal
+	May traverse removed nodes
+	Must have non-interference (natural in languages with GC like Java)
+	Limited hotspots
+	Only at locked add(), remove(), contains() destination locations, not traversals
+	But two traversals
+	Yet traversals are wait-free
+do for so good
+-------------------------------------	
+Much less lock acquisition/release
+Performance
+Concurrency
+Problems
+Need to traverse list twice
+contains() acquires locks
+Most common method call (90% in many applications)
+Optimistic works if
+Cost of scanning twice without locks <cost of scanning once with locks
+	

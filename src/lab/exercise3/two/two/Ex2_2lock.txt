@@ -1,0 +1,18 @@
+-bash-3.00$ java Asg1Ex2B 2
+Final Queue size: 100000
+        -->Head: 100000
+        Tail<--: 100000
+Execution time = 106671442 nanoseconds
+
+-bash-3.00$ java Asg1Ex2B 4
+Final Queue size: 200000
+        -->Head: 200000
+        Tail<--: 200000
+Execution time = 108092439 nanoseconds
+
+-bash-3.00$ java Asg1Ex2B 8
+Final Queue size: 400000
+        -->Head: 400000
+        Tail<--: 400000
+Execution time = 155289499 nanoseconds
+

@@ -1,0 +1,18 @@
+Yes, it is necessary to protect the check for a non-empty queue in the deq() 
+method of the unbounded lock based queue presented in the lab page.
+
+Consider the scenario, when there is only one item remain in the queue and there
+are two threads A and B who want to dequeue the last item from the queue.
+
+Assume that the check for a non-empty queue was unprotected. Both Threads A and B
+want to dequeue an item from the queue simultaneously. 
+
+In both threads A and B, the check for the non-empty queue is successful since there
+is one item remaining on the queue. Both of them proceed to call the lock method.
+One of them, say A gets the lock (thread B waits until lock is available again) 
+and proceeds with dequeuing the item from the queue and then releases the lock.
+The other thread B, then acquires the lock and incorrectly dequeues some garbage value
+from the queue, which should not have been the case.
+
+Hence, it is necessary to protect the check for a non-empty queue in the deq() method of
+the unbounded lock based queue.

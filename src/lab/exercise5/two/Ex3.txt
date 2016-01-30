@@ -1,0 +1,22 @@
+The unbounded lock-based queue
+----------------------------------------------
+2 Threads
+	Execution time = 9349428444 nanoseconds
+4 Threads
+	Execution time = 9911826674 nanoseconds
+8 Threads
+	Execution time = 10066790436 nanoseconds
+----------------------------------------------
+
+The unbounded lock-free queue
+----------------------------------------------
+2 Threads
+	Execution time = 9212136262 nanoseconds
+4 Threads
+	Execution time = 9155537392 nanoseconds
+8 Threads
+	Execution time = 9126939233 nanoseconds
+----------------------------------------------
+
+From the results it is clear that lock-free implementation outperforms the blocking
+lock-based queue implementation. 

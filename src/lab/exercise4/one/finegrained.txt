@@ -1,0 +1,7 @@
+Drawbacks
+Better than coarse-grained lock
+Threads can traverse in parallel
+Still not ideal
+Long chain of acquire/release
+Threads cannot overtake one another
+Inefficient

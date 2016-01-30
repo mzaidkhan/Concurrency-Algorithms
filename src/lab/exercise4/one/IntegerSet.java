@@ -1,0 +1,1 @@
+package lab.exercise4.one;public interface IntegerSet {	public boolean add(Integer x, String msg);	public boolean remove(Integer x, String msg);	public boolean contains(Integer x);}

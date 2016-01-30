@@ -1,0 +1,22 @@
+-bash-3.00$ java Asg1Ex1A 4
+Counter value = 300000
+Counter accessed 138929 by threadID 0
+Counter accessed 54275 by threadID 1
+Counter accessed 53064 by threadID 2
+Counter accessed 53732 by threadID 3
+Total count accesses : 300000
+Execution time = 125322410 nanoseconds
+
+-bash-3.00$ java Asg1Ex1A 8
+Counter value = 300000
+Counter accessed 118039 by threadID 0
+Counter accessed 9012 by threadID 1
+Counter accessed 9534 by threadID 2
+Counter accessed 9332 by threadID 3
+Counter accessed 59787 by threadID 4
+Counter accessed 12456 by threadID 5
+Counter accessed 12760 by threadID 6
+Counter accessed 69080 by threadID 7
+Total count accesses : 300000
+Execution time = 148051359 nanoseconds
+

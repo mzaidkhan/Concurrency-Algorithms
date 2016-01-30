@@ -1,0 +1,141 @@
+Exercise 1
+--------------
+
+-------------------------------
+Case 1 Readings (Non-volatile)|
+-------------------------------
+
+-----------------------------------------------------------
+scenario - One processor 4 threads
+-----------------------------------------------------------
+Counter value = 1000
+Counter accessed 1000 by threadID 0
+Counter accessed 0 by threadID 1
+Counter accessed 0 by threadID 2
+Counter accessed 0 by threadID 3
+Total count accesses : 1000
+Execution time = 49607456 nanoseconds
+
+-----------------------------------------------------------
+scenario - One processor 8 threads
+-----------------------------------------------------------
+Counter accessed 0 by threadID 1
+Counter accessed 0 by threadID 2
+Counter accessed 0 by threadID 3
+Counter accessed 0 by threadID 4
+Counter accessed 0 by threadID 5
+Counter accessed 0 by threadID 6
+Counter accessed 0 by threadID 7        
+Total count accesses : 1000
+Execution time = 61427891  nanoseconds
+
+-----------------------------------------------------------
+scenario - Multi processor 4 threads
+-----------------------------------------------------------
+Counter value = 300000
+Counter accessed 74927 by threadID 0
+Counter accessed 75213 by threadID 1
+Counter accessed 75077 by threadID 2
+Counter accessed 74783 by threadID 3
+Total count accesses : 300000
+Execution time = 244217418 nanoseconds
+
+-----------------------------------------------------------
+scenario - Multi processor 8 threads
+-----------------------------------------------------------
+Counter value = 300000
+Counter accessed 37526 by threadID 0
+Counter accessed 37528 by threadID 1
+Counter accessed 37523 by threadID 2
+Counter accessed 37345 by threadID 3
+Counter accessed 37523 by threadID 4
+Counter accessed 37519 by threadID 5
+Counter accessed 37518 by threadID 6
+Counter accessed 37518 by threadID 7
+Total count accesses : 300000
+Execution time = 418490301 nanoseconds
+
+---------------------------
+Case 2 Readings (volatile)|
+---------------------------
+
+-----------------------------------------------------------
+scenario - One processor 4 threads
+----------------------------------------------------------
+Counter value = 1000                    
+Counter accessed 1000 by threadID 0     
+Counter accessed 0 by threadID 1
+Counter accessed 0 by threadID 2
+Counter accessed 0 by threadID 3
+Total count accesses : 1000
+Execution time = 49673993 nanoseconds
+
+-----------------------------------------------------------
+scenario - One processor 8 threads
+-----------------------------------------------------------
+Counter value = 1000
+Counter accessed 1000 by threadID 0
+Counter accessed 0 by threadID 1
+Counter accessed 0 by threadID 2
+Counter accessed 0 by threadID 3
+Counter accessed 0 by threadID 4
+Counter accessed 0 by threadID 5
+Counter accessed 0 by threadID 6
+Counter accessed 0 by threadID 7        
+Total count accesses : 1000
+Execution time = 61456690 nanoseconds
+
+-----------------------------------------------------------
+scenario - Multi processor 4 threads
+-----------------------------------------------------------
+Counter value = 300000
+Counter accessed 75242 by threadID 0
+Counter accessed 75201 by threadID 1
+Counter accessed 74573 by threadID 2
+Counter accessed 74984 by threadID 3
+Total count accesses : 300000
+Execution time = 245091992 nanoseconds
+
+-----------------------------------------------------------
+scenario - Multi processor 8 threads
+-----------------------------------------------------------
+Counter value = 300000          
+Counter accessed 37528 by threadID 0    
+Counter accessed 37360 by threadID 1    
+Counter accessed 37528 by threadID 2
+Counter accessed 37521 by threadID 3
+Counter accessed 37515 by threadID 4
+Counter accessed 37514 by threadID 5
+Counter accessed 37522 by threadID 6
+Counter accessed 37512 by threadID 7
+Total count accesses : 300000
+Execution time = 454332867 nanoseconds
+
+--------------------------------------------------------------------------------
+
+-----------------
+Tabulation      |
+-----------------
+
+Multi-processor
+|--------------|----------|---------|--------|--------|--------------|
+| Scenario     | Counter  | Threads | Min    | Max    | Runtime [ms] | 
+|--------------|----------|---------|--------|--------|--------------|
+|Non-Volatile  | 300000   | 4       | 74783  | 75213  | 244.217418   |
+|              |          | 8       | 37345  | 37528  | 418.490301   |
+|--------------|----------|---------|--------|--------|--------------|
+| Volatile     | 300000   | 4       | 74573  | 75242  | 245.091992   |
+|              |          | 8       | 37360  | 37528  | 454.332867   |
+|--------------|----------|---------|--------|--------|--------------|
+
+
+Single-processor
+|--------------|----------|---------|--------|--------|--------------|
+| Scenario     | Counter  | Threads | Min    | Max    | Runtime [ms] | 
+|--------------|----------|---------|--------|--------|--------------|
+|Non- Volatile | 1000	  | 4       | 0      | 1000   | 49.607456    |
+|              |          | 8       | 0      | 1000   | 61.427891    |
+|--------------|----------|---------|--------|--------|--------------|
+| Volatile     | 1000     | 4       | 0      | 1000   | 49.673993    |
+|              |          | 8       | 0      | 1000   | 61.456690    |
+|--------------|----------|---------|--------|--------|--------------|

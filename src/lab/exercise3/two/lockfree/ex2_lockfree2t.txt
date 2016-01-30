@@ -1,0 +1,8 @@
+scp /home/student-conc/Desktop/ConcLab/src/lab/exercise3/two/lockfree/*.java mzkhan@130.125.11.19:.
+
+-bash-3.00$ java Asg1Ex2LockFree 2
+Queue size: 100000
+        -->Head: 100000
+        Tail<--: 100000
+Execution time = 51906893 nanoseconds
+

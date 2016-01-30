@@ -1,0 +1,95 @@
+Answer 2.1
+-------------------------------------------------------------------------------------------
+Assuming that items is a very large array. The queue algorithm presented is definitely
+lock-free for both the enq and deq methods.
+
+The use of atomic operation provided by compare and set (CAS) in enq method i.e,    
+	 int i = tail.getAndIncrement();
+     items[i].set(x);
+insures that a new item is always added to the next available unique index in the queue.
+
+And in deq method i.e, 
+		T value = items[i].getAndSet(null);
+        if (value != null) {
+          return value;
+         }
+insures that an item dequeue doesn't happen more than once in a concurrent environment.
+
+According to the design of CAS, If multiple threads may access the same memory, and 
+if a thread is currently performing a test-and-set, no other thread may begin another
+compare and set until the first thread is done.
+
+Lock free Enq()
+----------------------------------------
+
+For example sake lets say the value of tail is 10. And two A & B threads calls the 
+enq method concurrently.Based on the internal scheduling say thread A reached the 
+tail.getAndIncrement operation first, since it is an atomic CAS operation on the value 
+of tail. Thread B cannot begin it's compare and set until the Thread A is done. 
+Hence Thread B's call to tail.getAndIncrement(), is waiting until the same operation 
+on Thread A completes. Once the tail.getAndIncrement() operation in Thread A has 
+successfully completed (tail has value 11), the same operation on Thread B is 
+executed (tail has value 12). This ensures that enq method guarantees that a new 
+item is always added to the next available unique index the queue.This means that 
+items will not be added to the same array index more than once.
+
+Thread A adds item on index 10 where as Thread B adds items on index 11.
+
+----------------------------------------
+
+Lock free Deq()
+----------------------------------------
+
+Scenario 1
+~~~~~~~~~~
+For example say there is only one item (100) on the queue. Threads A and B both want to
+dequeue this item. Both of them concurrently call the deq method, fetch the range 
+as 1 and are now executing the for loop. Based on the internal scheduling say thread A 
+reached the getAndSet operation first, since it is an atomic CAS operation on the value 
+of tail. Thread B cannot begin it's compare and set until the Thread A is done. 
+Hence Thread B's call to items[0].getAndSet(null), is waiting until the same operation 
+on Thread A completes. Thread A atomically sets the items[0] to null and returns with 
+item value 100. As soon as the atomic operation getAndSet on Thread A completes, Thread B's
+getAndSet is executed. Since the value has been dequeued already by thread A. The value 
+of item is null. Thus Thread B must wait until another item is added to the queue.
+Thread B is busy waiting until it identifies an item on the queue. 
+
+Scenario 1
+~~~~~~~~~~
+For example say there are two items on the queue (100, 120 respectively). Threads A and B 
+both want to dequeue an item from the queue. Both of them concurrently call the deq method,
+fetch the range as 2 and are now executing the for loop in the range 0 to 1. Based on the 
+internal scheduling say thread A reached the getAndSet operation first on item[0], since it 
+is an atomic CAS operation on the value of tail. Thread B cannot begin it's compare and set 
+until the Thread A is done. Hence Thread B's call to items[0].getAndSet(null), is waiting 
+until the same operation on Thread A completes. Thread A atomically sets the items[0] to
+null and returns with item value 100. As soon as the atomic operation getAndSet on Thread A 
+completes, Thread B's getAndSet is executed. Thread B identifies that the item has already been
+dequeue. Thread B attempts to dequeue the next item from the queue, for loop is condition is
+still valid for i = 1. This time Thread B's call to items[1].getAndSet(null) successfully
+dequeue's the item and returns with value 120.
+
+Hence the given algorithm is lock-free with respect to both the enq and deq methods.
+-------------------------------------------------------------------------------------------
+
+
+Answer 2.1
+-------------------------------------------------------------------------------------------
+The provided algorithm does not preserve the FIFO ordering in all cases. 
+In other words the enq and deq methods are non-linearizable. 
+
+In enq method, say there are two threads A and B that want to add an item to the queue at the 
+same time. There is no guarantee that Thread A inserts the item before thread B. In fact, the 
+addition of the item is based on runtime execution scheduling. The thread that gets to call 
+(tail.getAndIncrement()) the compare and set operation first gets to add the item first.
+
+The same holds true for deq method, say there are two threads A and B that want to dequeue and 
+item from the queue at the same time. There is no guarantee that Thread A dequeues an item before 
+thread B. In fact, the removal of the item is based on runtime execution scheduling. The thread 
+that gets to call the compare and set operation (items[i].getAndSet(null)) first gets to remove 
+the item first.
+
+On the contrary, this algorithm is sequentially consistent. With real time ordering by introducing
+subsequent delays between enqueues and dequeues. In these cases, If the enqueue for an element by 
+Thread A starts before another enqueue element for a thread B, a following dequeue started by 
+Thread C will always return the element enqueued by thread A.

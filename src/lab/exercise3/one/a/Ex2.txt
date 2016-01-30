@@ -1,0 +1,117 @@
+Exercise 2
+--------------
+
+Readings
+-------------------------------------------------------------------------------
+Case 1 - Lock Free 2 Threads
+-------------------------------------------------------------------------------
+
+-----------------------------------------------------------
+scenario - 2 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex2LockFree 2
+Queue size: 100000
+        -->Head: 100000
+        Tail<--: 100000
+Execution time = 51906893 nanoseconds
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+Case 2 - 1 Lock 
+-------------------------------------------------------------------------------
+
+-----------------------------------------------------------
+scenario - 2 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex2A 2
+Queue size: 100000
+        -->Head: 100000
+        Tail<--: 100000
+Execution time = 118384053 nanoseconds
+
+-----------------------------------------------------------
+scenario - 4 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex2A 4
+Queue size: 200000
+        -->Head: 200000
+        Tail<--: 200000
+Execution time = 151906673 nanoseconds
+
+-----------------------------------------------------------
+scenario - 8 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex2A 8
+Queue size: 400000
+        -->Head: 400000
+        Tail<--: 400000
+Execution time = 274737044 nanoseconds
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+-------------------------------------------------------------------------------
+Case 2 - 2 Locks 
+-------------------------------------------------------------------------------
+
+-----------------------------------------------------------
+scenario - 2 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex2B 2
+Final Queue size: 100000
+        -->Head: 100000
+        Tail<--: 100000
+Execution time = 106671442 nanoseconds
+
+-----------------------------------------------------------
+scenario - 4 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex2B 4
+Final Queue size: 200000
+        -->Head: 200000
+        Tail<--: 200000
+Execution time = 108092439 nanoseconds
+
+-----------------------------------------------------------
+scenario - 8 threads
+-----------------------------------------------------------
+-bash-3.00$ java Asg1Ex2B 8
+Final Queue size: 400000
+        -->Head: 400000
+        Tail<--: 400000
+Execution time = 155289499 nanoseconds
+-------------------------------------------------------------------------------
+-------------------------------------------------------------------------------
+
+-----------------
+Tabulation      |
+-----------------
+
+|--------------|---------|----------------|----------------------|
+| Scenario     | Threads | Runtime [ms]   | Average Runtime [ms] | 
+|--------------|---------|----------------|----------------------|
+| Lock Free    | 2       |    51.906893   |    51.906893         |
+|--------------|---------|----------------|----------------------|
+| 1 Lock       | 2       |   118.384053   |                      |
+|              | 4       |   151.906673   |   181.6759233        |
+|              | 8       |   274.737044   |                      |
+|--------------|---------|----------------|----------------------|
+| 2 Lock       | 2       |   106.671442   |                      |
+|              | 4       |   108.092439   |   123.3511267        |
+|              | 8       |   155.289499   |                      |
+|--------------|---------|----------------|----------------------|
+
+The 2 thread Lock free cyclic array queue is the fastest of all the programs, this
+was expected as there is no overhead of locking mechanism. But since it is restricted
+to 2 threads only, it isn't scalable for situations that demands more threads of enqueuers
+& dequerers. Whereas, both the 1 and 2 Lock mechanism are best suited for such scalability.
+
+But the 2 Lock mechanism out performs the 1 Lock mechanism, due to the use of separate
+locks for enqueuing and dequeuing for protecting the head and tail pointers. This means
+that there is reduced contention and significantly reduced blocked waiting times for 
+acquiring locks if several enqueues and dequeues are issued at any given instance. 
+Enqueres and dequeres threads can run independent of each other when 2 separate locks 
+are used for enqueuer and dequeuer, localizing the locks internally within them. 
+This is evident from the runtime tabulated above. 
+2 Lock mechanism is much faster than 1 Lock mechanism.
+Also more threads means there is faster execution in case of 2 Lock mechanism.
